@@ -976,6 +976,16 @@ data "aws_iam_policy_document" "task_exec_assume" {
       identifiers = ["ecs-tasks.amazonaws.com"]
     }
   }
+
+  statement {
+    sid     = "GithubServiceAssumeRole"
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "AWS"
+      identifiers = [var.github_oidc_role_arn]
+    }
+  }
 }
 
 resource "aws_iam_role" "task_exec" {
@@ -1139,6 +1149,16 @@ data "aws_iam_policy_document" "tasks_assume" {
       test     = "StringEquals"
       variable = "aws:SourceAccount"
       values   = [local.account_id]
+    }
+  }
+
+  statement {
+    sid     = "GithubServiceAssumeRole"
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "AWS"
+      identifiers = [var.github_oidc_role_arn]
     }
   }
 }

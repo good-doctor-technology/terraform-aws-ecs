@@ -659,3 +659,10 @@ variable "security_group_tags" {
   type        = map(string)
   default     = {}
 }
+
+# MISC
+variable "github_oidc_role_arn" {
+  description = "The ARN of the IAM role to use when pulling images from ECR"
+  type        = string
+  default     = null
+}
