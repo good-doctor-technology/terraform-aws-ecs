@@ -528,7 +528,7 @@ resource "aws_iam_role_policy_attachment" "service" {
 module "container_definition" {
   source = "../container-definition"
 
-  for_each = { for k, v in var.container_definitions : k => v if local.create_task_definition && try(v.create, true) }
+  for_each = { for k, v in var.container_definitions : k => v if local.local.create_container_defs }
 
   operating_system_family = try(var.runtime_platform.operating_system_family, "LINUX")
 
@@ -592,6 +592,7 @@ module "container_definition" {
 
 locals {
   create_task_definition = var.create && var.create_task_definition
+  create_container_defs  = var.container_definitions_json != null && length(var.container_definitions_json) > 0 && local.create_task_definition
 
   # This allows us to query both the existing as well as Terraform's state and get
   # and get the max version of either source, useful for when external resources
@@ -614,11 +615,15 @@ data "aws_ecs_task_definition" "this" {
   ]
 }
 
+locals {
+  container_definitions = local.create_container_defs ? jsonencode([for k, v in module.container_definition : v.container_definition]) : var.container_definitions_json
+}
+
 resource "aws_ecs_task_definition" "this" {
   count = local.create_task_definition ? 1 : 0
 
   # Convert map of maps to array of maps before JSON encoding
-  container_definitions = jsonencode([for k, v in module.container_definition : v.container_definition])
+  container_definitions = local.container_definitions
   cpu                   = var.cpu
 
   dynamic "ephemeral_storage" {

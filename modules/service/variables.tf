@@ -286,6 +286,12 @@ variable "container_definition_defaults" {
   default     = {}
 }
 
+variable "container_definitions_json" {
+  description = "A JSON-formatted string representing the container definitions"
+  type        = string
+  default     = null
+}
+
 variable "cpu" {
   description = "Number of cpu units used by the task. If the `requires_compatibilities` is `FARGATE` this field is required"
   type        = number
