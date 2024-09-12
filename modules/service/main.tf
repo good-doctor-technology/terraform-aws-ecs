@@ -528,7 +528,7 @@ resource "aws_iam_role_policy_attachment" "service" {
 module "container_definition" {
   source = "../container-definition"
 
-  for_each = { for k, v in var.container_definitions : k => v if local.local.create_container_defs }
+  for_each = { for k, v in var.container_definitions : k => v if local.create_container_defs }
 
   operating_system_family = try(var.runtime_platform.operating_system_family, "LINUX")
 
