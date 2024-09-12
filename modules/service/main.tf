@@ -615,15 +615,11 @@ data "aws_ecs_task_definition" "this" {
   ]
 }
 
-locals {
-  container_definitions = local.create_container_defs ? jsonencode([for k, v in module.container_definition : v.container_definition]) : var.container_definitions_json
-}
-
 resource "aws_ecs_task_definition" "this" {
   count = local.create_task_definition ? 1 : 0
 
   # Convert map of maps to array of maps before JSON encoding
-  container_definitions = local.container_definitions
+  container_definitions = local.create_container_defs ? jsonencode([for k, v in module.container_definition : v.container_definition]) : var.container_definitions_json
   cpu                   = var.cpu
 
   dynamic "ephemeral_storage" {
