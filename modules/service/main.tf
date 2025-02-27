@@ -598,7 +598,8 @@ resource "aws_ecs_service" "codedeploy" {
       load_balancer,
       platform_version,
       network_configuration,
-      capacity_provider_strategy
+      capacity_provider_strategy,
+      launch_type
     ]
   }
 }
