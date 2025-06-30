@@ -183,7 +183,7 @@ variable "timeouts" {
 }
 
 variable "triggers" {
-  description = "Map of arbitrary keys and values that, when changed, will trigger an in-place update (redeployment). Useful with `timestamp()`"
+  description = "Map of arbitrary keys and values that, when changed, will trigger an in-place update (redeployment). Useful with `plantimestamp()`"
   type        = any
   default     = {}
 }
@@ -466,6 +466,12 @@ variable "task_exec_iam_statements" {
   description = "A map of IAM policy [statements](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document#statement) for custom permission usage"
   type        = any
   default     = {}
+}
+
+variable "task_exec_iam_policy_path" {
+  description = "Path for the iam role"
+  type        = string
+  default     = null
 }
 
 ################################################################################

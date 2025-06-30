@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## [5.12.1](https://github.com/terraform-aws-modules/terraform-aws-ecs/compare/v5.12.0...v5.12.1) (2025-04-18)
+
+
+### Bug Fixes
+
+* Ensure both ECS service definitions use the same settings/configurations ([#277](https://github.com/terraform-aws-modules/terraform-aws-ecs/issues/277)) ([6f4feab](https://github.com/terraform-aws-modules/terraform-aws-ecs/commit/6f4feaba42afcc3f233b41110d0b9ed204438843))
+
+## [5.12.0](https://github.com/terraform-aws-modules/terraform-aws-ecs/compare/v5.11.4...v5.12.0) (2024-11-29)
+
+
+### Features
+
+* Allow task exec IAM policy to have an IAM path ([#243](https://github.com/terraform-aws-modules/terraform-aws-ecs/issues/243)) ([c9dc889](https://github.com/terraform-aws-modules/terraform-aws-ecs/commit/c9dc889a4b081105fb7567ca12a2d32ac36caa29))
+
+
+### Bug Fixes
+
+* Update CI workflow versions to latest ([#236](https://github.com/terraform-aws-modules/terraform-aws-ecs/issues/236)) ([fd0f0ec](https://github.com/terraform-aws-modules/terraform-aws-ecs/commit/fd0f0ecd7fd3a85d8d738320d37a22644b5f129a))
+
 ## [5.11.4](https://github.com/terraform-aws-modules/terraform-aws-ecs/compare/v5.11.3...v5.11.4) (2024-08-07)
 
 

@@ -286,7 +286,7 @@ resource "aws_ecs_service" "ignore_task_definition" {
 
   dynamic "network_configuration" {
     # Set by task set if deployment controller is external
-    for_each = var.network_mode == "awsvpc" ? [{ for k, v in local.network_configuration : k => v if !local.is_external_deployment }] : []
+    for_each = var.network_mode == "awsvpc" && !local.is_external_deployment ? [local.network_configuration] : []
 
     content {
       assign_public_ip = network_configuration.value.assign_public_ip
@@ -382,7 +382,7 @@ resource "aws_ecs_service" "ignore_task_definition" {
   wait_for_steady_state = var.wait_for_steady_state
 
   propagate_tags = var.propagate_tags
-  tags           = var.tags
+  tags           = merge(var.tags, var.service_tags)
 
   timeouts {
     create = try(var.timeouts.create, null)
@@ -1096,8 +1096,8 @@ resource "aws_iam_policy" "task_exec" {
   name_prefix = var.task_exec_iam_role_use_name_prefix ? "${local.task_exec_iam_role_name}-" : null
   description = coalesce(var.task_exec_iam_role_description, "Task execution role IAM policy")
   policy      = data.aws_iam_policy_document.task_exec[0].json
-
-  tags = merge(var.tags, var.task_exec_iam_role_tags)
+  path        = var.task_exec_iam_policy_path
+  tags        = merge(var.tags, var.task_exec_iam_role_tags)
 }
 
 resource "aws_iam_role_policy_attachment" "task_exec" {
